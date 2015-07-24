@@ -1,6 +1,6 @@
 import static org.junit.Assert.*;
-import org.junit.Test;
 
+import org.junit.Test;
 
 public class TestScrabble {
 
@@ -8,7 +8,7 @@ public class TestScrabble {
 	public void positiveInput(){
 		String rack = "HOUR";
 		String fileName = "C:\\Users\\test\\Desktop\\sowpods.txt";
-		Scrabble scrabble = new Scrabble(rack, fileName);
+		ScrabbleBestWordFinder scrabble = new ScrabbleBestWordFinder(rack, fileName);
 		assertEquals("HOUR",scrabble.findBestWord());
 	}
 	
@@ -17,14 +17,14 @@ public class TestScrabble {
 		
 		String rack = "OR ";
 		String fileName = "C:\\Users\\test\\Desktop\\sowpods.txt";
-		Scrabble scrabble = new Scrabble(rack, fileName);
+		ScrabbleBestWordFinder scrabble = new ScrabbleBestWordFinder(rack, fileName);
 	}
 	
 	@Test(expected=RuntimeException.class)
 	public void invalidInput(){
 		String rack = "OR_";
 		String fileName = "C:\\Users\\test\\Desktop\\sowpods.txt";
-		Scrabble scrabble = new Scrabble(rack, fileName);
+		ScrabbleBestWordFinder scrabble = new ScrabbleBestWordFinder(rack, fileName);
 		scrabble.findBestWord();
 		
 	}
