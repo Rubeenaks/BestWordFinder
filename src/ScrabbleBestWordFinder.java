@@ -95,7 +95,7 @@ public class ScrabbleBestWordFinder {
 		return new String(letters);
 	}
 	
-	private void buildValidWordsDictionary()
+	private void buildDictionary()
 	{
 		File file = new File(this.dictionaryFileName);
 
@@ -106,9 +106,7 @@ public class ScrabbleBestWordFinder {
 			while (sc.hasNextLine()) {
 				String word = sc.next();
 				if (word.length() <= rackSize) {
-					if ( isWordValid(word) ) {
 						addWordsToDictionary(computeWordScore(word),word);
-					}	
 				}
 			}
 			sc.close();
@@ -140,7 +138,7 @@ public class ScrabbleBestWordFinder {
 	}
 	
 	public String findBestWord() {
-		buildValidWordsDictionary();
+		buildDictionary();
 		return extractMaxScoringdWords();
 	}
 	
