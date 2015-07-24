@@ -116,14 +116,20 @@ public class ScrabbleBestWordFinder {
 		}
 	}
 	
-	private String extractMaxScoringdWords() {
-		
+	private String extractValidWords() {
+
 		String validWords = "";
-		
-	    ArrayList<String> wordList = dictionary.firstEntry().getValue();
-	    for (String word : wordList) {
-	    	validWords += word + " "; 
-	    }
+		for (Map.Entry<Integer, ArrayList<String>> entry : dictionary.entrySet()) {
+			ArrayList<String> wordsList = entry.getValue();
+			for (String word : wordsList) {
+				if (isWordValid(word)) {
+					validWords += word + " ";
+				}
+			}
+			if (validWords.length() > 0) {
+				break;
+			}
+		}
 		return validWords.trim();
 	}
 	
@@ -139,7 +145,7 @@ public class ScrabbleBestWordFinder {
 	
 	public String findBestWord() {
 		buildDictionary();
-		return extractMaxScoringdWords();
+		return extractValidWords();
 	}
 	
 	public static void main(String args[]) {
