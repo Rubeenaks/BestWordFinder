@@ -1,26 +1,25 @@
-
+package Bootcamp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class Scrabble {
+public class ScrabbleBestWordFinder {
 	
 	final int rackSize = 7;
 	String rack;
-	ArrayList<String> rackList = new ArrayList<String>();
+	ArrayList<String> rackList = new ArrayList<>();
 	String dictionaryFileName;
-	TreeMap<Integer,ArrayList<String>> dictionary = new TreeMap<Integer, ArrayList<String>>(Collections.reverseOrder());
+	TreeMap<Integer,ArrayList<String>> dictionary = new TreeMap<>(Collections.reverseOrder());
 	final int[] letterScores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
 			25, 26};
 	int[] rackLetterCount = new int[26];
 	
-	Scrabble (String rack, String fName) {
+	ScrabbleBestWordFinder (String rack, String fName) {
 		this.rack = sortWord(rack.toUpperCase().trim());
 		createRackSpace(rack);
 		populateRackLetterCounts ();
@@ -85,7 +84,7 @@ public class Scrabble {
 		} else {
 			
 			//To be checked
-			ArrayList<String> wordList= new ArrayList<String>();
+			ArrayList<String> wordList= new ArrayList<>();
 			wordList.add(word);
 			dictionary.put(score, wordList);
 		}
@@ -97,7 +96,7 @@ public class Scrabble {
 		return new String(letters);
 	}
 	
-	private void buildDictionary()
+	private void buildValidWordsDictionary()
 	{
 		File file = new File(this.dictionaryFileName);
 
@@ -108,8 +107,9 @@ public class Scrabble {
 			while (sc.hasNextLine()) {
 				String word = sc.next();
 				if (word.length() <= rackSize) {
-					//System.out.println(word);
-					addWordsToDictionary(computeWordScore(word),word);
+					if ( isWordValid(word) ) {
+						addWordsToDictionary(computeWordScore(word),word);
+					}	
 				}
 			}
 			sc.close();
@@ -119,28 +119,18 @@ public class Scrabble {
 		}
 	}
 	
-	private String extractValidWords() {
+	private String extractMaxScoringdWords() {
 		
 		String validWords = "";
-		for (Map.Entry<Integer, ArrayList<String>> entry : dictionary.entrySet()) {
-	        Integer score = entry.getKey();
-	        ArrayList<String> wordList = entry.getValue();
-	        for (String word : wordList) {
-	        	
-	        	if ( isWordValid(word) ) {
-	        		
-	        		validWords += word + " "; 
-	        	}
-	        }
-	        if ( validWords.length() > 0 ) {
-	        	break;
-	        }
+		
+	    ArrayList<String> wordList = dictionary.firstEntry().getValue();
+	    for (String word : wordList) {
+	    	validWords += word + " "; 
 	    }
 		return validWords.trim();
 	}
 	
 	private boolean isWordValid(String word) {
-	
 		
 		for (String rack : rackList) {
 			if (rack.contains(sortWord(word))) {
@@ -151,15 +141,15 @@ public class Scrabble {
 	}
 	
 	public String findBestWord() {
-		buildDictionary();
-		return extractValidWords();
+		buildValidWordsDictionary();
+		return extractMaxScoringdWords();
 	}
 	
 	public static void main(String args[]) {
 		
-		String rack = "OR ";
+		String rack = "OURTA ";
 		String fileName = "C:\\Users\\test\\Desktop\\sowpods.txt";
-		Scrabble scrabble = new Scrabble(rack, fileName);
-		System.out.println(scrabble.findBestWord());
+		ScrabbleBestWordFinder scrabbleBestWordFinder = new ScrabbleBestWordFinder(rack, fileName);
+		System.out.println(scrabbleBestWordFinder.findBestWord());
 	}
 }
