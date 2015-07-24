@@ -1,4 +1,3 @@
-package Bootcamp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,9 +11,9 @@ public class ScrabbleBestWordFinder {
 	
 	final int rackSize = 7;
 	String rack;
-	ArrayList<String> rackList = new ArrayList<>();
+	ArrayList<String> rackList = new ArrayList<String>();
 	String dictionaryFileName;
-	TreeMap<Integer,ArrayList<String>> dictionary = new TreeMap<>(Collections.reverseOrder());
+	TreeMap<Integer,ArrayList<String>> dictionary = new TreeMap<Integer, ArrayList<String>>(Collections.reverseOrder());
 	final int[] letterScores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
 			25, 26};
 	int[] rackLetterCount = new int[26];
@@ -84,7 +83,7 @@ public class ScrabbleBestWordFinder {
 		} else {
 			
 			//To be checked
-			ArrayList<String> wordList= new ArrayList<>();
+			ArrayList<String> wordList= new ArrayList<String>();
 			wordList.add(word);
 			dictionary.put(score, wordList);
 		}
